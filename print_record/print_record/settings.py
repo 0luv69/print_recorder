@@ -10,6 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+
+
+
+
+
 from pathlib import Path
 import os
 
@@ -26,7 +31,7 @@ SECRET_KEY = 'django-insecure-7!tofw!d27o#3$g789rl_3$#n6!_@w7*i5$a7smog#&v)y5%fa
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -38,8 +43,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-     'rest_framework',
-    'main_app'
+
+    'rest_framework',
+    'main_app',
 ]
 
 MIDDLEWARE = [

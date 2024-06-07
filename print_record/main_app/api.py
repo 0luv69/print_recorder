@@ -14,6 +14,10 @@ from .serializers import *
 
 
 class stdApi(APIView):
+    authentication_classes = []
+    permission_classes = []
+
+
     def get(self, request):
         std_all_obj = Student.objects.all()
         ser_std_var = StdSerializer(std_all_obj, many=True)

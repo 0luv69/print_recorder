@@ -8,7 +8,8 @@ class StaffSerializer(serializers.ModelSerializer):
     class Meta:
         model = Staff
         fields = '__all__'
-            
+        
+    
     def create(self, validated_data):
         staff, created = Staff.objects.update_or_create(
             first_name=validated_data.pop('first_name'),

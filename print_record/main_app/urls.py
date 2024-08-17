@@ -9,4 +9,6 @@ urlpatterns = [
     # path('', views.index, name='index'),
     path('api/staff/', StaffApi.as_view(), name="getprofile"),
     path('api/std/', stdApi.as_view(), name="getstd"),
+
+    path('login', LoginApi.as_view(), name='login')
 ]

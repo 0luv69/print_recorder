@@ -31,7 +31,7 @@ SECRET_KEY = 'django-insecure-7!tofw!d27o#3$g789rl_3$#n6!_@w7*i5$a7smog#&v)y5%fa
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.1.72']
 
 
 # Application definition
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'main_app',
+    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
@@ -59,6 +60,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'print_record.urls'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
 
 TEMPLATES = [
     {

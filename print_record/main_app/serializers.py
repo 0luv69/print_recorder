@@ -35,9 +35,22 @@ class UserSerializer(serializers.ModelSerializer):
         fields= '__all__'
         
 
-
 class StdSerializer(serializers.ModelSerializer):
-    user= UserSerializer()
     class Meta:
         model = Student
         fields= '__all__'
+
+    # def create(self, validated_data):
+        
+    #     username= validated_data.pop('user')
+    #     name= validated_data.pop('name')
+    #     rollnum= validated_data.pop('rollnum')
+    #     print(username, name)
+    #     std = Student.objects.create(user=User.objects.get(username=username), name=name, rollnum=rollnum)
+
+    #     return std
+
+
+class LoginSerializer(serializers.Serializer):
+    user = serializers.CharField()
+    password= serializers.CharField()

@@ -6,10 +6,44 @@ from .serializers import StaffSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
-
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth import authenticate
 from .models import *
 from .serializers import *
+from rest_framework.permissions import AllowAny
 
+class LoginApi(APIView):
+    permission_classes = [AllowAny] 
+    def post(self, request):
+        try:
+            data = request.data
+            serializer = LoginSerializer(data=data)
+            if serializer.is_valid():
+                user = serializer.validated_data['user']
+                password = serializer.validated_data['password']
+
+                user = authenticate(username=user, password=password)
+                if user is None:
+                    return Response({
+                        'error': 'Invalid email or password'
+                    }, status=status.HTTP_403_FORBIDDEN)
+
+                refresh = RefreshToken.for_user(user)
+                return Response({
+                    'refresh': str(refresh),
+                    'access': str(refresh.access_token),
+                }, status=status.HTTP_200_OK)
+
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        except Exception as e:
+            return Response({
+                'error': str(e),
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+
+# class RegisterApi(APIView):
+#         pass
 
 
 
@@ -31,7 +65,6 @@ class stdApi(APIView):
     def post(self, request):
         data = request.data 
         ser_std_var = StdSerializer(data=data)
-
         if ser_std_var.is_valid():
             ser_std_var.save()
             return Response({
@@ -62,7 +95,12 @@ class StaffApi(APIView):
     authentication_classes = []
     permission_classes = []
 
-    
+    def get(self, request):
+        staff = Staff.objects.all()
+        serializer = StaffSerializer(staff, many= True)
+        return Response({'data': serializer.data}, status=status.HTTP_201_CREATED)
+
+
     def post(self, request):
         serializer = StaffSerializer(data=request.data)
 
